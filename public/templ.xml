@@ -1,0 +1,30 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE doc [
+<!--!ENTITY templ SYSTEM "templ.xml"-->
+<!ENTITY dyn PUBLIC "public_ID" "http://localhost:3000/templ.xml">
+<!ENTITY js "Jo Smith">
+<!ENTITY CountComponent "./Count">
+]>
+<template version="1.0">
+    <div id="main">
+        <h1>Template based JSX</h1>
+        <Import from="./templ2.xml" />
+        <Count custom='{"fetchFrom":"&CountComponent;", "hide":{"==":[11,112]}}' />
+        <For custom='{"each":"@g.form.list","as":"ul","hide":{">":[21, ${@g.count}]}}'>
+            <li className="${@g.class} row">
+                <h4>Controlling Person ${idx}</h4>                
+                <p>Name: ${@l.n} ${@l.ln}</p>
+                <p custom='{"hide": {"==": [false, ${@l.primary}]}}'>This is primary person</p>
+                <input placeholder="Enter your name" name="form.list[${idx}].n" data-id="${idx}" defaultValue="${@l.n}" />                
+            </li>
+        </For>
+        <p><button name="btn-ctr">${@g.btnLabel}</button></p>
+        <For custom='{"each":"@g.form.list","as":"div","hide":{">":[${@g.count}, 21]}}'>        
+            <MixMatch custom='{"fetchFrom":"./MixMatch"}'>
+            some content from template ${idx} &js;
+            <Count custom='{"fetchFrom":"&CountComponent;"}' className="xys"/>            
+            </MixMatch>   
+        </For>        
+        <!--Navigation custom='{"hide": {"==": [false, false]}}' /-->
+    </div>    
+</template>

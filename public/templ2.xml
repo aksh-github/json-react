@@ -1,0 +1,17 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE doc [
+<!ENTITY js PUBLIC "js" "http://localhost:3000/templ.xml">
+<!ENTITY dyn
+         PUBLIC "//template"
+         "http://localhost:3000/templ.xml">
+<!ENTITY pClass "Jo Smith">
+]>
+<template version="1.0">    
+    <div id="main">       
+        <p className="&pClass;">&js; &dyn;</p>        
+        main div before
+        <div className="${@g.class}" custom='{"hide":{"!==":[22, 22]}}'>                    
+            <Count custom='{"fetchFrom":"./Count"}' />
+        </div><space />main div after
+    </div>    
+</template>
