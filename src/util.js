@@ -25,7 +25,9 @@ export const getObjectProperty = (object, path) => {
 export const xml2json = (xml, { ignoreTags = [] } = {}) => {
   // console.log(xml.nodeType, xml.nodeName);
   const el = xml.nodeType === 9 ? xml.documentElement : xml;
-  if (ignoreTags.includes(el.nodeName)) return el;
+  if (ignoreTags.includes(el.nodeName)) {
+    return null;
+  }
 
   const h = { $: el.nodeName };
   // h.content = Array.from(el.childNodes || [])

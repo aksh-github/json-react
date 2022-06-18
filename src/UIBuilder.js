@@ -85,19 +85,26 @@ export const buildUI = (elementSchema, extras) => {
     case "h5":
     case "h6":
     case "header":
+    case "footer":
     case "ul":
     case "li":
-      return show && React.createElement(elementSchema.$, newProps, arr);
+      return show && <elementSchema.$ {...newProps}>{arr}</elementSchema.$>;
+    // return show && React.createElement(elementSchema.$, newProps, arr);
 
     case "button":
-      // console.log(extras);
+      // console.log(newProps);
       // newProps.onClick = () => extras.fns.setCount((c) => c + 1);
+      newProps.disabled = newProps.disabled === "true" ? true : false;
       newProps.onClick = (e) => extras.fns.buttonClicked(e);
       return show && React.createElement(elementSchema.$, newProps, arr);
 
     case "input":
       if (newProps.type === "text" || !newProps.type)
         newProps.onChange = (e) => extras.fns.textChanged(e);
+
+      return show && React.createElement(elementSchema.$, newProps, null);
+    case "textarea":
+      newProps.onChange = (e) => extras.fns.textChanged(e);
 
       return show && React.createElement(elementSchema.$, newProps, null);
     case "space":
@@ -124,13 +131,17 @@ export const buildUI = (elementSchema, extras) => {
         LazyComponent =
           CompoObject[elementSchema.$] ||
           React.lazy(() =>
-            import(`${newProps.custom.fetchFrom}`).then((module) => {
-              // console.log(module);
-              // return module;
-              return module.default
-                ? module
-                : { default: module[elementSchema.$] };
-            })
+            import(`${newProps.custom.fetchFrom}`)
+              .then((module) => {
+                // console.log(module);
+                // return module;
+                return module.default
+                  ? module
+                  : { default: module[elementSchema.$] };
+              })
+              .catch((err) => {
+                console.log(err);
+              })
           );
 
         if (!CompoObject[elementSchema.$])
@@ -160,6 +171,6 @@ export const buildUI = (elementSchema, extras) => {
 export const UIBuilder = ({ Ui }) => {
   const globalContext = useGlobal();
 
-  console.log(Ui, globalContext);
+  // console.log(Ui, globalContext);
   return buildUI(Ui, { ...globalContext });
 };
