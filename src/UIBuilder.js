@@ -1,5 +1,5 @@
 import React from "react";
-import { inject } from "./util";
+import { inject, startsWithCapital } from "./util";
 import jsonLogic from "json-logic-js";
 import { For, ErrorBoundary } from "./For";
 import { useGlobal } from "./GlobalContext";
@@ -50,7 +50,8 @@ export const buildUI = (elementSchema, extras) => {
   }
 
   // what to do for custom components
-  if (!["For", "MixMatch", "Count"].includes(elementSchema.$)) {
+  // if (!["For", "MixMatch", "Count"].includes(elementSchema.$)) {
+  if (!startsWithCapital(elementSchema.$)) {
     delete newProps.custom;
     // console.log(extras);
   }

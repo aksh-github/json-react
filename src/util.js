@@ -59,3 +59,7 @@ export const xml2json = (xml, { ignoreTags = [] } = {}) => {
   // h.children = h.children.filter((v) => v);
   return h;
 };
+
+export const startsWithCapital = (word) => {
+  return word.charAt(0) === word.charAt(0).toUpperCase();
+};
