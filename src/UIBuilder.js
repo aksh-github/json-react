@@ -51,7 +51,7 @@ export const buildUI = (elementSchema, extras) => {
 
   // what to do for custom components
   // if (!["For", "MixMatch", "Count"].includes(elementSchema.$)) {
-  if (!startsWithCapital(elementSchema.$)) {
+  if (!startsWithCapital(elementSchema.$ || "")) {
     delete newProps.custom;
     // console.log(extras);
   }
