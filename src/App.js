@@ -9,10 +9,12 @@ const routeData = {
   "/": {
     dataKey: "intro",
     xmlKey: "chat-intro.xml",
+    jsonKey: "chatintro.json",
   },
   "/room": {
     dataKey: "main",
     xmlKey: "chat-main.xml",
+    jsonKey: "chatmain.json",
   },
 };
 
@@ -61,10 +63,6 @@ const msgs = [
 
 // https://gist.github.com/Nachasic/0431415eec47b4bd090a65bade6e8597
 
-const arr = ["akshay", "bapaye"];
-
-const Common = () => {};
-
 function App() {
   const path = "/"; //this will be route
   const [message, setMessage] = useState("");
@@ -90,23 +88,33 @@ function App() {
   // console.log("https://jasonformat.com/wtf-is-jsx/");
 
   useEffect(() => {
-    fetch(routeData[path].xmlKey)
-      .then((res) => res.text())
-      .then((res) => {
-        // console.log(res);
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(res, "application/xml");
-        // console.log(doc);
-        // console.log(
-        //   document.evaluate("/template", doc, null, XPathResult.ANY_TYPE, null),
+    // process for xml
+    // fetch(routeData[path].xmlKey)
+    //   .then((res) => res.text())
+    //   .then((res) => {
+    //     // console.log(res);
+    //     const parser = new DOMParser();
+    //     const doc = parser.parseFromString(res, "application/xml");
+    //     // console.log(doc);
+    //     // console.log(
+    //     //   document.evaluate("/template", doc, null, XPathResult.ANY_TYPE, null),
 
-        //   doc.querySelectorAll("Import")[0].attributes
-        // );
-        const jsonSchema = xml2json(doc, {
-          ignoreTags: [],
-        });
-        console.log(JSON.stringify(jsonSchema));
-        setUi(jsonSchema);
+    //     //   doc.querySelectorAll("Import")[0].attributes
+    //     // );
+    //     const jsonSchema = xml2json(doc, {
+    //       ignoreTags: [],
+    //     });
+    //     console.log(JSON.stringify(jsonSchema));
+    //     setUi(jsonSchema);
+    //   });
+
+    // process for json
+    fetch(routeData[path].jsonKey)
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+
+        setUi(res);
       });
   }, []);
 
