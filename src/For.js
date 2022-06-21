@@ -27,14 +27,7 @@ const For = (props) => {
   const { custom, ...newProps } = props;
   // console.log(props, globalContext);
 
-  let _data = [];
-
-  if (custom.each && custom.each.startsWith("@g.")) {
-    _data = getObjectProperty(
-      globalContext.data,
-      custom.each.replace("@g.", "")
-    );
-  }
+  let _data = custom.each || [];
 
   const arr = _data.map((dataItem, idx) => {
     // console.log(el);

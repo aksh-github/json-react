@@ -46,7 +46,7 @@ export const buildUI = (elementSchema, extras) => {
               // console.log(getProp(extras, k.split(".")));
               return getProp(extras, k.split("."));
             } else if (value?.startsWith?.("${@g")) {
-              const k = value.replace("${@g", "").replace("}", "");
+              const k = value.replace("${@g", "data").replace("}", "");
               // console.log(getProp(extras, k.split(".")));
               return getProp(extras, k.split("."));
             } else return value; // return the unchanged property value.
