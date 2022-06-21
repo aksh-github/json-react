@@ -41,8 +41,8 @@ export const buildUI = (elementSchema, extras) => {
         newProps = {
           ...newProps,
           custom: JSON.parse(newProps.custom, (key, value) => {
-            if (value?.startsWith?.("${@l")) {
-              const k = value.replace("${@l", "localData").replace("}", "");
+            if (value?.startsWith?.("${@l.")) {
+              const k = value.replace("${@l.", "localData").replace("}", "");
               // console.log(getProp(extras, k.split(".")));
               return getProp(extras, k.split("."));
             } else if (value?.startsWith?.("${@g")) {
