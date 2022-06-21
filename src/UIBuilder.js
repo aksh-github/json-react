@@ -1,5 +1,5 @@
 import React from "react";
-import { inject, startsWithCapital } from "./util";
+import { inject, startsWithCapital, getProp } from "./util";
 import jsonLogic from "json-logic-js";
 import { For, ErrorBoundary } from "./For";
 import { useGlobal } from "./GlobalContext";
@@ -28,7 +28,7 @@ export const buildUI = (elementSchema, extras) => {
   if (elementSchema.props) {
     Object.keys(newProps).forEach((prop, idx) => {
       // console.log(elementSchema);
-      if (newProps[prop].includes("${")) {
+      if (prop != "custom" && newProps[prop].includes("${")) {
         // console.log(inject(elementSchema.props[prop], extras));
         newProps[prop] = inject(newProps[prop], extras);
       }
@@ -40,7 +40,17 @@ export const buildUI = (elementSchema, extras) => {
       if (typeof newProps.custom === "string")
         newProps = {
           ...newProps,
-          custom: JSON.parse(newProps.custom),
+          custom: JSON.parse(newProps.custom, (key, value) => {
+            if (value?.startsWith?.("${@l")) {
+              const k = value.replace("${@l", "localData").replace("}", "");
+              // console.log(getProp(extras, k.split(".")));
+              return getProp(extras, k.split("."));
+            } else if (value?.startsWith?.("${@g")) {
+              const k = value.replace("${@g", "").replace("}", "");
+              // console.log(getProp(extras, k.split(".")));
+              return getProp(extras, k.split("."));
+            } else return value; // return the unchanged property value.
+          }),
         };
 
       // decide to hide or not

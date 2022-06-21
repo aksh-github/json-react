@@ -9,7 +9,8 @@ export const inject = (str, _obj) =>
         g = g.replace("@g", "data");
         break;
     }
-    return getObjectProperty(_obj, g);
+    // return getObjectProperty(_obj, g);
+    return getProp(_obj, g.split("."));
   });
 
 export const getObjectProperty = (object, path) => {
@@ -19,7 +20,21 @@ export const getObjectProperty = (object, path) => {
     return null;
   }
   const parts = path.split(".");
-  return parts.reduce((object, key) => object?.[key], object);
+  // return parts.reduce((object, key) => object?.[key], object);
+  return getProp(object, parts);
+};
+
+export const getProp = (object, path) => {
+  if (path.length === 1) return object[path[0]];
+  // else if (path.length === 0) throw error;
+  else {
+    if (object[path[0]]) return getProp(object[path[0]], path.slice(1));
+    else {
+      object[path[0]] = {};
+      const retVal = getProp(object[path[0]], path.slice(1));
+      return retVal;
+    }
+  }
 };
 
 export const xml2json = (xml, { ignoreTags = [] } = {}) => {
