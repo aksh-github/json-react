@@ -5,23 +5,58 @@ import { inject, xml2json } from "./util";
 import { UIBuilder } from "./UIBuilder";
 import { GlobalProvider } from "./GlobalContext";
 
-// export const Ele = (props) => {
-//   return <h4 title={props.title}>{props.title}</h4>;
-// };
-
-// export const List = (props) => {
-//   return props.list.map((txt, idx) => {
-//     return <Ele key={"k" + idx} title={txt} />;
-//   });
-// };
+const msgs = [
+  {
+    message: "hi",
+    from: "me",
+  },
+  {
+    message: "hieee",
+    from: "jay4",
+  },
+  {
+    message: "what doing",
+    from: "me",
+  },
+  {
+    message: "hi",
+    from: "jay4",
+  },
+  {
+    message: "hi",
+    from: "me",
+  },
+  {
+    message: "hi",
+    from: "me",
+  },
+  {
+    message: "hi",
+    from: "jay4",
+  },
+  {
+    message: "hi",
+    from: "me",
+  },
+  {
+    message: "hi",
+    from: "me",
+  },
+  {
+    message: "this is some big message",
+    from: "jay4",
+  },
+];
 
 // https://gist.github.com/Nachasic/0431415eec47b4bd090a65bade6e8597
 
 const arr = ["akshay", "bapaye"];
 
+const Common = () => {};
+
 function App() {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(msgs);
 
   const _data = {
     message: message,
@@ -47,7 +82,7 @@ function App() {
         //   doc.querySelectorAll("Import")[0].attributes
         // );
         const jsonSchema = xml2json(doc, {
-          ignoreTags: [],
+          ignoreTags: ["header2", "footer2"],
         });
         console.log(JSON.stringify(jsonSchema));
         setUi(jsonSchema);

@@ -12,7 +12,20 @@
     <div>Room: {props.room}</div>
   </header>
   <div className="chat-row">
-    <ChatMessages custom='{"fetchFrom":"./ChatMessages"}' />
+    <!--ChatMessages custom='{"fetchFrom":"./ChatMessages2"}' /-->
+    <div className="messages">
+      <For custom='{"each":"${@g.messages}","as":"div"}'>
+        <div>
+        <div className="me  w3-animate-bottom"  custom='{"hide": {"!=": ["me", "${@l.from}"]}}'>          
+          <span>${@l.message}</span>
+        </div> 
+        <div className="other  w3-animate-top"  custom='{"hide": {"==": ["me", "${@l.from}"]}}'>
+          <p>${@l.from}</p>
+          <span>${@l.message}</span>
+        </div>    
+      </div>            
+      </For>
+    </div>
   </div>
   <footer>
     <textarea
