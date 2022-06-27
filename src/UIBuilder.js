@@ -76,7 +76,8 @@ export const buildUI = (elementSchema, extras) => {
     arr = elementSchema.children.map((el, idx) => {
       if (el.props) {
         // console.log(el.props);
-        el.props.key = "k" + idx;
+        // el.props.key = "k" + idx;
+        el.key = "k" + idx;
       }
 
       return (
